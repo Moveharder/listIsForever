@@ -72,6 +72,7 @@ export function fetchListAdpter(fetchConfig = {
             current_page = 0, last_page = 0, per_page = 10
           } = pageData;
           fetchConfig.params.page = current_page;
+          delete pageData.data;
           fetchConfig.paginationData = pageData;
           //如果有设定最后一页则用限定的，否则用接口返回的last_page。需要考虑last_page < dataPagesLimit的情况，这时相当于未提供dataPagesLimit
           let hasMore = false;
