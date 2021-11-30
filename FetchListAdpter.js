@@ -101,12 +101,14 @@ export function fetchListAdpter(fetchConfig = {
           if (Array.isArray(extraAdpter)) {
             extraAdpter.map(({
               dataKey,
-              dataKeyChain
+              dataKeyChain,
+              dataDecorator
             }) => {
-              fetchConfig[dataKey] = tryToReachYourDeepHeart(res, dataKeyChain)
+              let extraData = tryToReachYourDeepHeart(res, dataKeyChain);
+              fetchConfig[dataKey] = dataDecorator ? dataDecorator(extraData) : extraData;
             })
           } else {
-            reject(new Error("extraAdpter必须为对象数组，形如：[{dataKey:'xx', dataKeyChain:'xx.xx.xx'}]"));
+            reject(new Error("extraAdpter必须为对象数组，形如：[{dataKey:'xx', dataKeyChain:'xx.xx.xx', dataDecorator: data=>{}}]"));
           }
         }
 
